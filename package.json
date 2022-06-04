@@ -1,0 +1,19 @@
+{
+    "name": "arduboy-aseprite",
+    "displayName": "Arduboy Extensions",
+    "description": "Convert sprites to C arrays.",
+    "version": "0.1",
+    "author": { "name": "rorticus@gmail.com" },
+    "contributors": [ ],
+    "publisher": "rorymulligan",
+    "license": "MIT",
+    "categories": [ "Scripts" ],
+    "contributes": {
+      "scripts": [
+          { "path": "./scripts/arduboy.lua" }
+      ]
+    },
+    "scripts": {
+        "package": "zip -r arduboy-aseprite.aseprite-extension . -x .git/\\*"
+    }
+  }
