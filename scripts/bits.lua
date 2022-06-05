@@ -47,13 +47,13 @@ function dump(o)
 end
 
 function HorizontalBitArray:create(w, h)
-    local o = { bytes = {}, width = w, height = h, delta = math.floor(w / 8)}
+    local o = { bytes = {}, width = w, height = h }
     setmetatable(o, self)
     self.__index = self
     
-    local size = math.floor(w / 8) * h
+    local size = math.ceil(w / 8) * h
     
-    for i = 0, size - 1 do 
+    for i = 0, size do 
         o.bytes[i] = BitCluster:new()
     end
     
@@ -61,7 +61,7 @@ function HorizontalBitArray:create(w, h)
 end
 
 function HorizontalBitArray:set(x, y, color)
-    local idx = y * self.delta + math.floor(x / 8)
+    local idx = y * (math.ceil(self.width / 8)) + math.floor(x / 8)
     local remainder = x % 8
 
     if color.gray >= 128 then
@@ -72,7 +72,7 @@ end
 function HorizontalBitArray:toHexArray()
     local data = {}
     
-    for i = 0, #self.bytes - 1 do
+    for i = 0, #self.bytes do
         data[i] = self.bytes[i]:toHex()
     end
     
@@ -82,13 +82,13 @@ end
 VerticalBitArray = { }
 
 function VerticalBitArray:create(w, h)
-    local o = { bytes = {}, width = w, height = h, delta = math.floor(h / 8)}
+    local o = { bytes = {}, width = w, height = h }
     setmetatable(o, self)
     self.__index = self
     
-    local size = math.floor(h / 8) * w
+    local size = math.ceil(h / 8) * w
     
-    for i = 0, size - 1 do 
+    for i = 0, size do 
         o.bytes[i] = BitCluster:new()
     end
     
@@ -96,7 +96,7 @@ function VerticalBitArray:create(w, h)
 end
 
 function VerticalBitArray:set(x, y, color)
-    local idx = x + self.delta * math.floor(y / 8)
+    local idx = math.floor(y / 8) * self.width + x
     local remainder = y % 8
 
     if color.gray >= 128 then
@@ -106,8 +106,8 @@ end
 
 function VerticalBitArray:toHexArray()
     local data = {}
-    
-    for i = 0, #self.bytes - 1 do
+
+    for i = 0, #self.bytes do
         data[i] = self.bytes[i]:toHex()
     end
     
@@ -122,7 +122,7 @@ function HorizontalByteArray:create(w, h)
     
     local size = w * h
     
-    for i = 0, size - 1 do 
+    for i = 0, size do 
         o.bytes[i] = 0
     end
     
@@ -137,7 +137,7 @@ end
 function HorizontalByteArray:toHexArray()
     local data = {}
     
-    for i = 0, #self.bytes - 1 do
+    for i = 0, #self.bytes do
         data[i] = string.format("%02x", self.bytes[i])
     end
     
@@ -152,7 +152,7 @@ function RGBAByteArray:create(w, h)
     
     local size = w * h * 4
     
-    for i = 0, size - 1 do 
+    for i = 0, size do 
         o.bytes[i] = 0
     end
     
@@ -170,7 +170,7 @@ end
 function RGBAByteArray:toHexArray()
     local data = {}
     
-    for i = 0, #self.bytes - 1 do
+    for i = 0, #self.bytes do
         data[i] = string.format("%02x", self.bytes[i])
     end
     

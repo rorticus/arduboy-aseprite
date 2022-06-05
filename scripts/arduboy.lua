@@ -131,7 +131,7 @@ function convertSprite(sprite, frame, opts)
         sized= opts.sized,
         width= img.width,
         height= img.height,
-        name= friendlyName(getFilename(sprite.filename or "unnamed"))
+        name= friendlyName(getFilename(sprite.filename or "unnamed") or "unnamed")
     })
 end
 
@@ -211,7 +211,7 @@ function init(plugin)
     print("Aseprite is initializing my plugin")
 
     if plugin.preferences.template == nil then
-        plugin.preferences.template = "const uint8_t PROGMEM"
+        plugin.preferences.template = "const uint8_t PROGMEM NAME[]"
     end
 
     if plugin.preferences.includeSize == nil then
